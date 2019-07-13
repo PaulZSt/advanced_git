@@ -66,7 +66,10 @@ class ContentController extends Controller
     {
         $model = new Content();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->user_id = Yii::$app->user->identity->id;
+            $model->create_at = time();
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

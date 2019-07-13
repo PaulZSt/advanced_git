@@ -75,8 +75,6 @@ class UserController extends Controller
             $model->generateAuthKey();
             $model->generateEmailVerificationToken();
             $model->generatePasswordResetToken();
-
-
             $imageName = time();
             $model->photo = UploadedFile::getInstance($model, 'file');
             if(!empty($model->photo))

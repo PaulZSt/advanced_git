@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Cities;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ContentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,22 +30,56 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'meta_title',
-            'description:ntext',
-            'meta_description:ntext',
+            //'meta_title',
+            //'description:ntext',
+            //'meta_description:ntext',
             //'short_content:ntext',
             //'content:ntext',
-            //'city_id',
-            //'user_id',
-            //'category_id',
+            [
+                'attribute' => 'city_id',
+                'filter' => Cities::find()->select(['name','id'])->indexBy('id')->column(),
+                'value' => 'hostgroup.name',
+            ],
+            [
+                'attribute' => 'user_id',
+                'filter' => Cities::find()->select(['name','id'])->indexBy('id')->column(),
+                'value' => 'username.username',
+            ],
+            [
+                'attribute' => 'category_id',
+                'filter' => Cities::find()->select(['name','id'])->indexBy('id')->column(),
+                'value' => 'category.title',
+            ],
             //'price',
             //'image:ntext',
+            [
+                'attribute' => 'image',
+                'format' => 'image',
+                'contentOptions' =>['class' => 'grid_image'],
+                'value' =>  function ($data) {
+                    return \Yii::$app->imagemanager->getImagePath($data['image'], '100', '100','inset');
+                },
+            ],
             //'images:ntext',
             //'options:ntext',
             //'views',
             //'create_at',
+            [
+                'attribute' => 'create_at',
+                'format' => ['date', 'php:Y-m-d H:i:s']
+            ],
             //'update_at',
-            //'status',
+            [
+                'attribute' => 'update_at',
+                'format' => ['date', 'php:Y-m-d H:i:s']
+            ],
+            [
+                'attribute' => 'status',
+                'value' =>  function($model) {
+                    return $model->status == 1 ? 'Active' : 'Inactive';
+
+                },
+            ],
             //'url:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],

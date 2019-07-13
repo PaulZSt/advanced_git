@@ -14,7 +14,7 @@ use app\models\Area;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'id_area')->dropDownList(Area::find()->select(['name','id'])->indexBy('id')->column()) ?>
+    <?= $form->field($model, 'id_area')->dropDownList(Cities::find()->select(['name','id'])->indexBy('id')->column()) ?>
     <?= $form->field($model, 'status')->checkbox() ?>
 
 

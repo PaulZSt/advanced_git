@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Cities;
+use app\models\Category;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Content */
@@ -24,27 +27,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'city_id')->textInput() ?>
+    <?= $form->field($model, 'city_id')->dropDownList(Cities::find()->select(['name','id'])->indexBy('id')->column()) ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList(Category::find()->select(['title','id'])->indexBy('id')->column()) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'image')->textarea(['rows' => 6]) ?>
+    <?=$form->field($model, 'image')->widget(\noam148\imagemanager\components\ImageManagerInputWidget::className(), [
+        'aspectRatio' => (16/9), //set the aspect ratio
+        'cropViewMode' => 1, //crop mode, option info: https://github.com/fengyuanchen/cropper/#viewmode
+        'showPreview' => true, //false to hide the preview
+        'showDeletePickedImageConfirm' => false, //on true show warning before detach image
+    ]); ?>
 
     <?= $form->field($model, 'images')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'options')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'views')->textInput() ?>
-
-    <?= $form->field($model, 'create_at')->textInput() ?>
-
-    <?= $form->field($model, 'update_at')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->checkbox() ?>
 
     <?= $form->field($model, 'url')->textarea(['rows' => 6]) ?>
 

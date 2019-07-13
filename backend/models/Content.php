@@ -76,4 +76,19 @@ class Content extends \yii\db\ActiveRecord
             'url' => Yii::t('app', 'Url'),
         ];
     }
+    public function getHostgroup()
+    {
+        return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+    }
+
+    public function getUsername()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
 }
