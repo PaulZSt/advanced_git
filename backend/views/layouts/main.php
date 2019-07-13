@@ -259,6 +259,7 @@ AppAsset::register($this);
                 <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
                 <!--<li><a href="/admin/index"><i class="fa fa-link"></i> <span>Home</span></a></li>-->
                 <!--<li><a href="/admin/product"><i class="fa fa-link"></i> <span>Products</span></a></li>-->
+                <li><a href="<?=Url::to(['/content']);?>"><i class="fa fa-link"></i> <span>Content</span></a></li>
                 <li><a href="<?=Url::to(['/category']);?>"><i class="fa fa-link"></i> <span>Category</span></a></li>
                 <li><a href="<?=Url::to(['/page']);?>"><i class="fa fa-link"></i> <span>Pages</span></a></li>
                 <li><a href="<?=Url::to(['/news']);?>"><i class="fa fa-link"></i> <span>News</span></a></li>
