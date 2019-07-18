@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use app\models\Messages;
 
 AppAsset::register($this);
 ?>
@@ -33,8 +34,6 @@ AppAsset::register($this);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-
-
 <body class="hold-transition skin-blue sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="wrapper">
@@ -50,10 +49,6 @@ AppAsset::register($this);
             <span class="logo-lg"><?=Yii::$app->name; ?></span>
         </a>
 
-
-
-
-
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
@@ -68,7 +63,8 @@ AppAsset::register($this);
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
+                            <span class="label label-success"><? echo Messages::find()->where(['user' => '1'])->count(); ?>
+                            </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">You have 4 messages</li>
@@ -276,6 +272,7 @@ AppAsset::register($this);
                     </ul>
                 </li>
                 <li><a href="<?=Url::to(['/user']);?>"><i class="fa fa-link"></i> <span>Users</span></a></li>
+                <li><a href="<?=Url::to(['/messages']);?>"><i class="fa fa-link"></i> <span>Messages</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>

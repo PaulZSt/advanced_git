@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'image',
                 'contentOptions' =>['class' => 'grid_image'],
                 'value' =>  function ($data) {
-                    return \Yii::$app->imagemanager->getImagePath($data['image'], '100', '100','inset');
+                    return \Yii::$app->imagemanager->getImagePath($data['image'], '300', '310','inset');
                 },
             ],
             //'images:ntext',

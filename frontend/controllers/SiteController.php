@@ -1,19 +1,23 @@
 <?php
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use frontend\models\ResendVerificationEmailForm;
+use frontend\models\VerifyEmailForm;
+use yii\base\InvalidArgumentException;
+use yii\web\BadRequestHttpException;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\CategorysSearch;
+use frontend\models\Content;
+use frontend\models\ContentSearch;
 
 /**
  * Site controller
@@ -74,7 +78,27 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new ContentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchCategory = new CategorysSearch();
+        $dataCategory = $searchCategory->search(Yii::$app->request->queryParams);
+        //$category = $this->getCategory();
+        return $this->render('index', [
+            'dataCategory' => $dataCategory,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
+    protected function getCategory()
+    {
+        if (($model = Categorys::find()->select('title')->all())!== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
     }
 
     /**
@@ -150,6 +174,34 @@ class SiteController extends Controller
      *
      * @return mixed
      */
+
+
+
+
+    public function actionAdd()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new Content();
+        if ($model->load(Yii::$app->request->post())) {
+            //print_r(Yii::$app->request->post());
+            $model->save();
+            //$model->save();
+            //return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('add', [
+            'model' => $model,
+        ]);
+
+
+
+
+    }
+
+
+
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -256,5 +308,15 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+
+    protected function findModel($id)
+    {
+        if (($model = Content::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }
